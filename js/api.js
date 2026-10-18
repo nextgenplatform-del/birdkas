@@ -1,4 +1,4 @@
-export const ENDPOINT='https://script.google.com/macros/s/AKfycbyhQSZ85Q36OkoPtIZL_W541pv0PAP8McbPYWKFJsrqMU-twI-qisGKmvP22kdTqy-C/exec';
+export const ENDPOINT='https://script.google.com/macros/s/AKfycbydyX-_FCcQZSQx04HChwxw8J7qwlkEmyyutdvLEYCX8SJbna8-YQzSjh3kMmfaLl8e/exec';
 // POST inside a frame: credentials never enter a URL, and success requires a matched response.
 export function request(action,payload={},token='',requestId=crypto.randomUUID()){
  return new Promise((resolve,reject)=>{
