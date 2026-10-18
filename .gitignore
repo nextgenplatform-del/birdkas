@@ -3,3 +3,12 @@ node_modules/
 .env
 .env.*
 *.log
+# Apps Script OAuth state, local target config and remote-source snapshots
+.clasprc.json
+.clasprc.*.json
+.clasp.json
+clasp-backups/
+*.pem
+*.key
+credentials*.json
+token*.json

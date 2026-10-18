@@ -1,4 +1,4 @@
-# BirdKas v0.1
+# BirdKas — frontend V0.1, backend internal V0.2
 Stok Tercatat, Untung Terlihat. Frontend HTML/CSS/ES modules native, tanpa dependency runtime. Demo lokal untuk ditinjau sebelum integrasi database.
 
 ## Jalankan
@@ -13,8 +13,8 @@ Catatan transaksi tersimpan dalam localStorage `birdkas-demo-v1`, hanya di brows
 - `js/app.js`: hash routing, halaman, form bertahap dan interaksi.
 - `assets/`: ikon PNG/SVG serta ilustrasi burung sementara.
 - `manifest.json`, `service-worker.js`: PWA, cache allowlist aset statis.
-- `backend/Code.gs`: stub perencanaan Apps Script, belum berfungsi sebagai backend.
-- `docs/BACKEND.md`: skema, API, autentikasi, idempotency dan pemulihan parsial.
+- `backend/`: implementasi Apps Script V0.2 internal (Schema/Core/SheetsRepository/Code + manifest), belum dipasang live.
+- `docs/BACKEND.md`, `API.md`, `SECURITY.md`, `CLASP.md`: skema, kontrak, otorisasi dan prosedur pemasangan.
 - `tests/store.test.mjs`: tes aturan akuntansi dan perubahan stok.
 
 ## GitHub Pages nanti
@@ -27,3 +27,6 @@ Jalankan `npm test`. Untuk pemeriksaan sintaks: `npm run check`. Rincian penguji
 Metode Tunai otomatis masuk Kas Tunai; Transfer otomatis masuk Rekening Bank dan wajib memiliki bukti. File JPG/PNG/HEIC maksimal 10 MB disimpan sebagai Blob di IndexedDB `birdkas-demo-attachments`, store `files`. localStorage hanya menyimpan metadata `transferProof`: id, storage, name, mimeType, size, driveFileId (null), verificationStatus (UNVERIFIED). Tidak ada upload Google Drive. File hanya tersedia di browser/origin yang sama; penghapusan data browser dapat menghilangkannya.
 
 Modul `js/sale-payment.js` menangani UI pembayaran bersama dan penyimpanan sebelum penjualan; `js/attachments.js` menangani file. Jika penyimpanan file gagal, transaksi tidak dicatat; jika penjualan ditolak, file yang baru ditulis dibersihkan. IndexedDB dan localStorage bukan transaksi atomik bersama; penutupan browser mendadak di antara kedua tahap dapat meninggalkan file tanpa referensi. Reset data demo juga membersihkan lampiran. HEIC dapat dilampirkan; preview mengikuti codec browser, dengan tautan unduh bila tidak dapat ditampilkan. Input file native tanpa forced capture menyediakan pilihan kamera/galeri sesuai iOS. Bukti bukan verifikasi otomatis penerimaan uang.
+
+## Backend V0.2 — tahap pertama
+Frontend tetap mode DEMO lokal dan tidak diubah. Backend native Apps Script disiapkan untuk 16 tabel, pembelian, penjualan, kas/modal/biaya, penyesuaian dan laporan, dengan Owner gate, request idempotency, audit dan recovery journal. Tidak ada endpoint publik atau koneksi frontend, data DEMO di Sheets, push clasp maupun deployment. Jalankan `npm run test:backend` untuk pengujian dengan test doubles Google Services; `npm test` mencakup regresi frontend juga. Lihat `docs/BACKEND.md` dan `docs/CLASP.md` sebelum memasang.

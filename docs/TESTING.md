@@ -31,3 +31,30 @@ Belum diuji pada perangkat iPhone fisik, keyboard iOS nyata, instalasi Add to Ho
 - Penjualan dua burung Tunai tanpa bukti sebesar 1.150.000 berhasil disimpan: tunai naik 1.200.000 → 2.350.000; bank tetap 7.750.000. Review mempertahankan HPP 800.000 dan laba kotor 350.000.
 - Tidak ada error/warning console pada rangkaian pengujian. Visual detail bukti diperiksa pada lebar 390px.
 - Kamera/galeri iPhone fisik dan decoding HEIC asli belum diuji; browser menentukan dukungan preview. Validasi format HEIC diuji melalui header file; penyimpanan/preview/reload end-to-end memakai PNG.
+
+## Backend V0.2 internal (18 Oktober 2026)
+
+`npm test`: **28/28 lulus** (21 pengujian backend + 7 regresi frontend). `npm run check`: seluruh JS frontend dan empat file Apps Script lolos sintaks; manifest Asia/Jakarta valid dan tidak memiliki web/API executable. Google Services diuji melalui VM/test doubles lokal, tanpa akses spreadsheet/Drive/project Apps Script asli.
+
+Pemetaan kriteria wajib:
+
+| Kriteria | Pengujian |
+|---|---|
+| Setup tanpa duplikasi | 16 tabel, dua akun nol, stok kosong, rerun tidak menulis ulang, konflik header/master/timezone berhenti sebelum mutasi |
+| Pembelian satuan | Satu individu, HPP dan kas/persediaan, tanpa beban laba |
+| Pembelian borongan | Beberapa UUID unik, sisa pembagian Rupiah, manual allocation |
+| Alokasi HPP | Jumlah wajib tepat; selisih ditolak tanpa transaksi |
+| Penjualan tersedia | Satuan dan multi individu, snapshot HPP, cash sesuai metode |
+| Penjualan ganda | Terjual, mati/hilang, ID hilang dan pilihan duplikat ditolak |
+| Saldo tidak cukup | Pembelian, biaya, penarikan modal dan transfer ditolak |
+| Biaya operasi | Alias kategori frontend dinormalisasi; kas dan laba berkurang |
+| Modal | Setoran dan penarikan tidak masuk omzet/beban |
+| Transfer kas | Dua ledger seimbang, saldo per akun, tanpa laba |
+| Mati/hilang | Stok/persediaan turun, kerugian HPP sekali, tanpa kas keluar baru |
+| Konsistensi laporan | Kas + persediaan = modal neto + laba, P&L per bulan, search/status |
+| Request duplikat | Replay hasil asli tanpa mutasi, payload/action berbeda ditolak |
+| Parsial/recovery | PREPARED/APPLYING/RECOVERY_REQUIRED, blok query/command, replay langkah idempoten, konflik edit luar ditolak |
+
+Tambahan: setiap batas write sebelum/sesudah diuji pada enam jenis command (pembelian, penjualan, biaya, modal, transfer dan penyesuaian); master/setup juga diuji terhenti parsial. Validasi proof menolak IndexedDB, file publik/link sharing dan file luar folder; Drive restricted proof diterima tanpa menganggap dana terverifikasi. Owner kosong/salah, effective user salah, konfigurasi target spreadsheet salah, formula injection, ledger corruption, input tanggal/nominal tidak valid dan lock sibuk ditolak. Tidak ada dependency pengujian eksternal.
+
+Batas: belum diuji pada runtime Google Apps Script nyata, OAuth consent, kuota/timeout Google nyata, Drive permissions nyata, atau spreadsheet salinan. Test doubles menyuntikkan failure sebelum/sesudah setValues; ini bukan bukti atomisitas Google. Kerusakan journal karena edit manual di luar kode tetap memerlukan review administrasi. Pemanggilan public Execution API dan transport frontend sengaja belum dibuat.

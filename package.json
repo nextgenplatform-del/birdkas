@@ -1,1 +1,11 @@
-{"name":"birdkas","version":"0.1.0","private":true,"type":"module","scripts":{"test":"node --test tests/*.test.mjs","check":"node --check js/app.js && node --check js/store.js && node --check js/attachments.js && node --check js/sale-payment.js && node --check service-worker.js"}}
+{
+  "name": "birdkas",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check js/app.js && node --check js/store.js && node --check js/attachments.js && node --check js/sale-payment.js && node --check service-worker.js && node scripts/check-backend.mjs",
+    "test:backend": "node --test tests/backend.test.mjs"
+  }
+}
