@@ -12,3 +12,5 @@ clasp-backups/
 *.key
 credentials*.json
 token*.json
+# Private Owner provisioning material (password hashes and session key)
+.owner-bootstrap.json

@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {age,esc,photoUrl} from '../js/model.js';
+test('usia terus berjalan tanpa menulis ke Sheets',()=>{const b={tanggal_beli:'2026-01-01',usia_beli:2,satuan_usia:'Minggu'};assert.equal(age(b,new Date('2026-01-08T00:00:00')),'3 minggu');assert.equal(age({...b,usia_beli:0},new Date('2026-01-03T00:00:00')),'2 hari')});
+test('data Sheet di-escape dan foto menolak javascript URL',()=>{assert.equal(esc('<script>'), '&lt;script&gt;');assert.equal(photoUrl('javascript:alert(1)'), '');assert.equal(photoUrl('https://drive.google.com/test'),'https://drive.google.com/test')});
