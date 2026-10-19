@@ -1,4 +1,4 @@
-const CACHE='birdkas-v1-2';
+const CACHE='birdkas-v1-3';
 const FILES=['./','./index.html','./styles.css','./js/app.js','./js/api.js','./js/model.js','./manifest.json','./assets/icon.svg','./assets/icon-192.png','./assets/icon-512.png'];
 self.addEventListener('install',event=>event.waitUntil(
  caches.open(CACHE).then(cache=>cache.addAll(FILES.map(url=>new Request(url,{cache:'reload'})))).then(()=>self.skipWaiting())

@@ -19,6 +19,11 @@ dialog{margin:auto;max-width:calc(100% - 24px);max-height:calc(var(--viewport-he
 #toast{top:calc(14px + env(safe-area-inset-top,0px));max-width:calc(100% - 32px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px))}
 @media(max-width:700px){.shell{padding-bottom:calc(125px + env(safe-area-inset-bottom,0px))}.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.login-form{padding-bottom:calc(35px + env(safe-area-inset-bottom,0px))}.login-art .eyebrow{line-height:1.8}.hero-foot{flex-wrap:wrap}.modal-head{padding:18px 20px 14px}.modal-head h2{font-size:21px}}
 @media(max-width:360px){.shell{padding-left:14px;padding-right:14px}.hero{padding:22px 18px}.hero .amount{font-size:29px}.card .value{font-size:20px}.form-grid{grid-template-columns:minmax(0,1fr)}.login-art,.login-form{padding-left:20px;padding-right:20px}.actions{grid-template-columns:repeat(3,minmax(0,1fr))}}
-html{scrollbar-gutter:stable}body:has(dialog[open]){overflow:hidden}
-dialog{position:fixed;top:calc(var(--viewport-top,0px) + var(--viewport-height,100dvh)/2);bottom:auto;left:0;right:0;transform:translateY(-50%);margin:0 auto}
+html{scrollbar-gutter:stable}
+/* Stable dialog origin: Safari scroll events must never reposition the modal. */
+dialog{position:fixed;top:0;bottom:0;left:0;right:0;transform:none;margin:auto;overflow:hidden}
+#modal-content{display:flex;flex-direction:column;min-height:0;max-height:inherit;overflow:hidden}
+.modal-head{position:static;flex:0 0 auto}
+.modal-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;scroll-padding-block:16px}
+@media(max-width:700px){dialog{top:calc(env(safe-area-inset-top,0px) + 12px);bottom:auto;margin:0 auto;max-height:calc(var(--viewport-height,100svh) - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px) - 24px)}}
 body::before{content:'';position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);background:var(--forest);pointer-events:none;z-index:50}
